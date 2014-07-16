@@ -73,14 +73,7 @@ explizit returns [Explizit exp]
                     (COMMA n = number { $exp.addNumber($n.num); } )*;
 
 implizit returns [Implizit imp]
-    : DOT DOT n = number { $imp = new Implizit($n.num); }; 
-
-nosequence returns [NoSequence nseq]: 
-                ( n = number    { $nseq = $n.num; }
-                | p = path      { $nseq = $p.p; }
-                | s = string    { $nseq = $s.mstring; }
-                | m = mixed     { $nseq = $m.mmixed; }
-                );
+    : DOT DOT n = number { $imp = new Implizit($n.num); };
 
 path returns [MyPath p]
 @init {
@@ -110,13 +103,17 @@ number returns [MyNumber num]:
            i = integer      { $num = $i.mint; }
             | f = floating  { $num = $f.mfloat; }
             ;
-integer returns [MyInteger mint]:
-           s = MINUS? n = DIGIT { $mint = new MyInteger($s.text, $n.text); }
+integer returns [MyInteger mint]
+@init {
+	$mint = new MyInteger(); }:
+           s = MINUS { $mint.setSign(); } ? 
+		   n = DIGIT { $mint.setNumber($n.text); }
             ;
 
 floating returns [MyFloat mfloat]: 
-           s = MINUS? n = DIGIT DOT m = DIGIT 
-           { $mfloat = new MyInteger($s.text, $n.text, $m.text); }
+           s = MINUS { $mfloat.setSign(); } ? 
+		   n = DIGIT DOT m = DIGIT 
+           { $mfloat.setNumber($n.text, $m.text); }
             ;
 
 STARTTAG    :   '<';
