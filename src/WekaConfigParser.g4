@@ -16,7 +16,8 @@ string          : (SMALLCHAR
 
 value           : (string 
                 | numeric 
-                | mixed);
+                | mixed
+                | path);
 numeric         : number sequence?;
 sequence        : COMMA number (explizit | implizit);
 explizit        : (COMMA number)*;

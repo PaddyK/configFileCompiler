@@ -24,4 +24,13 @@ public class Explizit extends Sequence {
 			list.add(values.get(i));
 		return list;
 	}
+	
+	@Override
+	public List<KeyValue> getKeyValuePairs(MyString key) {
+		List<Value> values = explodeValues();
+		List<KeyValue> list = new ArrayList<KeyValue>();
+		for(Value val : values)
+			list.add(val.getKeyValuePairs(key).get(0));
+		return list;
+	}
 }

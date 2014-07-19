@@ -2,19 +2,14 @@ package interpretation;
 
 import java.util.List;
 
-public class Sequence {
-	protected MyNumber firstNumber;
+public abstract class Sequence extends MyNumeric {
 	protected MyNumber nextNumber;
 	private Sequence remainder;
 	
 	public Sequence() {
 		
 	}
-	
-	public void setFirstNumber(MyNumber number) {
-		firstNumber = number;
-	}
-	
+		
 	public void setNextNumber(MyNumber number) {
 		nextNumber = number;
 	}
@@ -23,9 +18,13 @@ public class Sequence {
 		remainder = rem;
 	}
 	
-	public List<Value> explodeValues() {
+	@Override
+	public List<KeyValue> getKeyValuePairs(MyString key) {
 		remainder.setFirstNumber(firstNumber);
 		remainder.setNextNumber(nextNumber);
-		return remainder.explodeValues();
+		return remainder.getKeyValuePairs(key);
 	}
+	
+	@Override
+	public abstract List<Value> explodeValues();
 }

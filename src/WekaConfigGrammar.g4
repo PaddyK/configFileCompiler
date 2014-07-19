@@ -52,11 +52,14 @@ value returns [Value val]:
                 (s = string     { $val = $s.mstring; }
                 | n = numeric   { $val = $n.num; }
                 | m = mixed     { $val = $m.mmixed; }
+				| p = path		{ $val = $p.p:}
                 );
 
-numeric returns [MyNumeric num]: 
-                  n = number s = sequence? 
-                  { $num = new MyNumeric($n.num, $s.seq); }
+numeric returns [MyNumeric num]
+@init {
+	$num = new MyNumeric(); }: 
+                  n = number { $num.setFirstNumber($n.num); }
+				  (s = sequence { $num.setSequence($s.seq);})?
                   ;
 
 sequence returns [Sequence seq]
@@ -78,25 +81,25 @@ implizit returns [Implizit imp]
 path returns [MyPath p]
 @init {
        $p = new MyPath(); }: 
-                sl1 = SLASH                 { $p.add($sl1.text); }? 
-                (s1 = string sl2 = SLASH)+  { $p.add($s1.text); $p.add($sl2.text); } 
-                s2 = string                 { $p.add($s2.text); }
-                d = DOT                     { $p.add($d.text); }
-                s3 = string                 { $p.add($s3.text); }
+                (sl1 = SLASH{ $p.setIsRoot();  })? 
+                (s1 = mixed sl2 = SLASH)+  { $p.add($s1.text);  } 
+                s2 = mixed                 { $p.add($s2.text); }
+                d = DOT                     
+                s3 = mixed                 { $p.addExtension($s3.text); }
                 ;
 
 mixed returns [Mixed mmixed]
 @init {
-       $mmixed = ""; }: 
-                (d = DOT                { $mmixed += $d.text; }
-                | c = COMMA             { $mmixed += $c.text; }
-                | s = SPACE             { $mmixed += $s.text; }
-                | dg = DIGIT            { $mmixed += $dg.text; }
-                | m = MINUS             { $mmixed += $m.text; }
-                | bb = BSLASH BSLASH    { $mmixed += $bb.text; }
-                | bhk = BSLASH HK       { $mmixed += $bhk.text; }
-                | sc = SMALLCHAR        { $mmixed += $sc.text; }
-                | cc = CAPITALCHAR      { $mmixed += $cc.text; }
+       $mmixed = new Mixed(); }: 
+                (d = DOT                { $mmixed.add($d.text); }
+                | c = COMMA             { $mmixed.add($c.text); }
+                | s = SPACE             { $mmixed.add($s.text); }
+                | dg = DIGIT            { $mmixed.add($dg.text); }
+                | m = MINUS             { $mmixed.add($m.text); }
+                | bb = BSLASH BSLASH    { $mmixed.add($bb.text); }
+                | bhk = BSLASH HK       { $mmixed.add($bhk.text); }
+                | sc = SMALLCHAR        { $mmixed.add($sc.text); }
+                | cc = CAPITALCHAR      { $mmixed.add($cc.text); }
                 )+;
 
 number returns [MyNumber num]:

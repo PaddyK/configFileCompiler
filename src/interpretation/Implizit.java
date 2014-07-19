@@ -40,4 +40,13 @@ public class Implizit extends Sequence {
 		else
 			return -1; //TODO: error handling
 	}
+	
+	@Override
+	public List<KeyValue> getKeyValuePairs(MyString key) {
+		List<Value> values = explodeValues();
+		List<KeyValue> list = new ArrayList<KeyValue>();
+		for(Value val : values)
+			list.add(val.getKeyValuePairs(key).get(0));
+		return list;
+	}
 }

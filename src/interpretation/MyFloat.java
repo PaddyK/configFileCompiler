@@ -1,5 +1,8 @@
 package interpretation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MyFloat extends MyNumber {
 	private double myFloat;
 	
@@ -48,5 +51,12 @@ public class MyFloat extends MyNumber {
 				return -1;
 		} else
 			return 0;			
+	}
+	
+	@Override
+	public List<interpretation.KeyValue> getKeyValuePairs(MyString key) {
+		List<interpretation.KeyValue> list = new ArrayList<interpretation.KeyValue>();
+		list.add(new interpretation.KeyValue(key, this));
+		return list;
 	}
 }

@@ -1,6 +1,46 @@
 package interpretation;
 
-public class MyNumeric {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MyNumeric extends Value{
+	protected MyNumber firstNumber;
+	private Sequence sequence;
+	private boolean isSequence;
+	private MyNumeric numeric;
 	
-	public MyNumeric() {}
+	public MyNumeric() {
+		isSequence = false;
+		firstNumber = null;
+		sequence = null;
+		numeric = (MyNumeric)firstNumber;
+	}
+	
+	public void setFirstNumber(MyNumber number) {
+		firstNumber = number;
+	}
+	
+	public void setSequence(Sequence seq) {
+		sequence = seq;
+		isSequence = true;
+		numeric = (MyNumeric)sequence;
+	}
+	
+	public List<Value> explodeValues() {
+		List<Value> values;
+		if(isSequence) {
+			sequence.setFirstNumber(firstNumber);
+			values = sequence.explodeValues();
+		}
+		else {
+			values = new ArrayList<Value>();
+			values.add(firstNumber);
+		}
+		return values;
+	}
+
+	@Override
+	public List<interpretation.KeyValue> getKeyValuePairs(MyString key) {
+		return numeric.getKeyValuePairs(key);
+	}
 }

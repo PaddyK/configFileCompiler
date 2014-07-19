@@ -1,5 +1,8 @@
 package interpretation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MyInteger extends MyNumber {
 	private int myInt;
 	
@@ -49,4 +52,11 @@ public class MyInteger extends MyNumber {
 		} else
 			return 0;			
 	}	
+	
+	@Override
+	public List<interpretation.KeyValue> getKeyValuePairs(MyString key) {
+		List<interpretation.KeyValue> list = new ArrayList<interpretation.KeyValue>();
+		list.add(new interpretation.KeyValue(key, this));
+		return list;
+	}
 }
