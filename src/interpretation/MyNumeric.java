@@ -3,7 +3,7 @@ package interpretation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyNumeric extends Value{
+public abstract class MyNumeric extends Value{
 	protected MyNumber firstNumber;
 	private Sequence sequence;
 	private boolean isSequence;
@@ -26,21 +26,16 @@ public class MyNumeric extends Value{
 		numeric = (MyNumeric)sequence;
 	}
 	
-	public List<Value> explodeValues() {
-		List<Value> values;
-		if(isSequence) {
-			sequence.setFirstNumber(firstNumber);
-			values = sequence.explodeValues();
-		}
-		else {
-			values = new ArrayList<Value>();
-			values.add(firstNumber);
-		}
-		return values;
-	}
-
-	@Override
-	public List<interpretation.KeyValue> getKeyValuePairs(MyString key) {
-		return numeric.getKeyValuePairs(key);
-	}
+//	public List<Value> explodeValues() {
+//		List<Value> values;
+//		if(isSequence) {
+//			sequence.setFirstNumber(firstNumber);
+//			values = sequence.explodeValues();
+//		}
+//		else {
+//			values = new ArrayList<Value>();
+//			values.add(firstNumber);
+//		}
+//		return values;
+//	}
 }

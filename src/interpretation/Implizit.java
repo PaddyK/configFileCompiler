@@ -11,7 +11,7 @@ public class Implizit extends Sequence {
 		super();
 	}
 	
-	public List<Value> explodeValues() {
+	public List<Value> getValueSpace() {
 		List<Value> values = new ArrayList<Value>();
 		double start = getValueFromMyNumber(firstNumber)
 			,next = getValueFromMyNumber(nextNumber)
@@ -43,7 +43,7 @@ public class Implizit extends Sequence {
 	
 	@Override
 	public List<KeyValue> getKeyValuePairs(MyString key) {
-		List<Value> values = explodeValues();
+		List<Value> values = getValueSpace();
 		List<KeyValue> list = new ArrayList<KeyValue>();
 		for(Value val : values)
 			list.add(val.getKeyValuePairs(key).get(0));

@@ -24,7 +24,4 @@ public abstract class Sequence extends MyNumeric {
 		remainder.setNextNumber(nextNumber);
 		return remainder.getKeyValuePairs(key);
 	}
-	
-	@Override
-	public abstract List<Value> explodeValues();
 }

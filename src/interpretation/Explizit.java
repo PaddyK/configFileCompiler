@@ -15,7 +15,7 @@ public class Explizit extends Sequence {
 		values.add(num);
 	}
 	
-	public List<Value> explodeValues() {
+	public List<Value> getValueSpace() {
 		values.add(firstNumber);
 		values.add(nextNumber);
 		Collections.sort(values);
@@ -27,10 +27,10 @@ public class Explizit extends Sequence {
 	
 	@Override
 	public List<KeyValue> getKeyValuePairs(MyString key) {
-		List<Value> values = explodeValues();
+		List<Value> values = getValueSpace();
 		List<KeyValue> list = new ArrayList<KeyValue>();
 		for(Value val : values)
-			list.add(val.getKeyValuePairs(key).get(0));
+			list.addAll(val.getKeyValuePairs(key));
 		return list;
 	}
 }

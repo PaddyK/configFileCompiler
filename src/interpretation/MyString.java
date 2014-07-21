@@ -27,4 +27,11 @@ public class MyString extends Value {
 		list.add(new interpretation.KeyValue(key, this));
 		return list;
 	}
+	
+	@Override
+	public List<Value> getValueSpace() {
+		List<Value> list = new ArrayList<Value>();
+		list.add(this);
+		return null;
+	}
 }

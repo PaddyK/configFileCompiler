@@ -6,8 +6,9 @@
 
 grammar WekaConfigParser;
 configfile      : element+;
-element         : STARTTAG SPACE* string (SPACE+ attributes)? SPACE* (shortend | longend);
-attributes      : (keyvalue SPACE+ attributes | keyvalue)+;
+element         : STARTTAG SPACE* string (SPACE+ attributes)? SPACE* elementend;
+elementend      : (shortend | longend);
+attributes      : (keyvalue SPACE*)+;
 keyvalue        : string EQ HK value HK;
 longend         : ENDTAG element+ STARTTAG SLASH string ENDTAG;
 shortend        : SLASH ENDTAG;

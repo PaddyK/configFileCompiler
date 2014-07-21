@@ -17,18 +17,19 @@ element returns [Element el]
 @init {
        $el = new Element(); }: 
            STARTTAG SPACE* name = string    { el.setName($name.mstring); }
-           (SPACE+ a = attributes           { el.addAttributes($a.attr); })? 
-           SPACE* (l = longend          { el.addElement($l.le); }
-                  | s = shortend)
+           (SPACE+ a = attributelist        { el.addAttributeList($a.attr); } )? 
+           SPACE* e = elementend            { el.addElementEnd($e.end); }
            ;
 
-attributes returns [Attribute attr]
+elementend returns [ElementEnd end] :
+                    (l = longend    { $end = $l.le; }
+                    | s = shortend  { $end = $s.le; }) 
+                    ;
+
+attributelist returns [AttributeList attr]
 @init {
-       $attr = new Attribute();}: 
-              (k1 = keyvalue    { $attr.setKeyValue($k1.kv); } 
-               SPACE+ 
-               a = attributes   { $attr.setAttribute($a.attr); })+
-              | k2 = keyvalue   { $attr.setKeyValue($k2.kv); }
+       $attr = new AttributeList();}: 
+              (k1 = keyvalue { $attr.addKeyValue($k1.kv); } )+
               ;
 
 keyvalue returns [KeyValue kv]: 
