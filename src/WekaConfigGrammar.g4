@@ -18,12 +18,12 @@ element returns [Element el]
        $el = new Element(); }: 
            STARTTAG SPACE* name = string    { el.setName($name.mstring); }
            (SPACE+ a = attributelist        { el.addAttributeList($a.attr); } )? 
-           SPACE* e = elementend            { el.addElementEnd($e.end); }
+           SPACE* e = elementend            { el.setElementEnd($e.end); }
            ;
 
 elementend returns [ElementEnd end] :
                     (l = longend    { $end = $l.le; }
-                    | s = shortend  { $end = $s.le; }) 
+                    | s = shortend  { $end = $s.se; }) 
                     ;
 
 attributelist returns [AttributeList attr]
@@ -39,8 +39,8 @@ longend returns [Longend le]:
            ENDTAG (e = element { $le.addElement($e.el)})+ 
            STARTTAG SLASH s = string { $le.addEndName($s.mstring); } ENDTAG;
 
-shortend: 
-            SLASH ENDTAG;
+shortend returns [ShortEnd se]: 
+            SLASH ENDTAG {$se = new ShortEnd(); };
 
 string returns [MyString mstring]
 @init {

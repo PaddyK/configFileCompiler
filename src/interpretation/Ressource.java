@@ -1,5 +1,5 @@
 package interpretation;
 
-public class Configfile {
+public class Ressource {
 	
 }
