@@ -69,6 +69,7 @@ public class ClassifierSetup {
 	
 	private List<List<String>> listOfLists;
 	private String classifierName;
+	private boolean hasOptions;
 	
 	/**
 	 * Creates the permutations as specified in the config file
@@ -80,6 +81,7 @@ public class ClassifierSetup {
 		List<List<String>> localListOfLists;
 		List<String> list;
 		KeyValue name;
+		hasOptions = false;
 		
 		if(secondlevel.getAttributeList().size() != 1)
 			throw new Exception("Classifier tag MUST contain name=\"\" only");
@@ -100,6 +102,7 @@ public class ClassifierSetup {
 		// In weka standard options are then used. If it is a short notation simply the classifier
 		// name needs to be set. No additional instructions are necessary
 		if(secondlevel.getEnd() instanceof Longend) {
+			hasOptions = true;
 			for(Element el : secondlevel.getEnd().getElements()) {
 				// It is not allowed to specify an classifier within an classifier. A classifier can
 				// only be a child node of an attribute
@@ -176,8 +179,18 @@ public class ClassifierSetup {
 	 */
 	public List<String[]> getOptionsAsArray() {
 		List<String[]> ret = new ArrayList<String[]>();
-		for(List<String> l : listOfLists)
-			ret.add((String[])l.toArray());
+		String[] arr;
+		for(List<String> l : listOfLists) {
+			if(l.isEmpty()) return null;
+			arr = new String[l.size()];
+			for(int i = 0; i < l.size(); i++)
+				arr[i] = l.get(i);
+			ret.add(arr);
+		}
 		return ret;
+	}
+	
+	public boolean hasOptions() {
+		return hasOptions;
 	}
 }

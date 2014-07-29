@@ -6,6 +6,7 @@ public class Resource {
 	private HashMap<String, Object> resourcen;
 	
 	public Resource(Element secondlevel) throws Exception{
+		/** Contains all resources defined in config file **/
 		resourcen = new HashMap<String, Object>();
 		
 		// There must be at least one childnode (the path to arff files) in resource node
@@ -43,7 +44,7 @@ public class Resource {
 			}
 		}			
 	}
-	public Object getValues(String key) {
+	public Object getValue(String key) {
 		return resourcen.get(key);
 	}
 	

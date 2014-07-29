@@ -13,7 +13,6 @@ import org.antlr.v4.runtime.CommonTokenStream;
 public class RunInterpreter {
 
 	public static void main(String[] args) {
-		System.out.println(args[0]);
 		List<ExperimentSetup> setups = null;
 		try {
 			ANTLRFileStream			stream = new ANTLRFileStream(args[0]);
@@ -24,7 +23,10 @@ public class RunInterpreter {
 			System.out.println(setups.size());
 			for(ExperimentSetup s : setups) {
 				System.out.println(s.resourcesToString());
-				s.printClassifier();}
+				s.printClassifier();
+				List<String[]> options = s.getClassifierSetups().get(0).getOptionsAsArray();
+				System.out.println(s.resourcesToString());
+			}
 
 		} catch(Exception e) {
 			e.printStackTrace();

@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExperimentSetup {
-	List<Resource> resources;
+	Resource resources;
 	List<ClassifierSetup> setups;
 	
 	public ExperimentSetup(Element toplevel) throws Exception {
-		resources = new ArrayList<Resource>();
+		resources = null;
 		setups = new ArrayList<ClassifierSetup>();
 		
 		if(!(toplevel.getEnd() instanceof Longend)) {
@@ -23,8 +23,7 @@ public class ExperimentSetup {
 					setups.add(csetup);
 					break;
 				case "resources"		:
-					Resource res = new Resource(el);
-					resources.add(res);
+					resources = new Resource(el);
 					break;
 				default:
 					throw new Exception("Unknown element encountered. Element was: " + el.getName().toString());
@@ -34,11 +33,11 @@ public class ExperimentSetup {
 	}
 	
 	public String resourcesToString() {
-		String ret = "";
-		for(Resource r : resources)
-			ret += r.toString() + ", ";
-		if(ret.length()>2)ret = ret.substring(0,ret.length() - 2);
-		return ret;
+		return resources.toString();
+	}
+	
+	public Object getResource(String key) {
+		return resources.getValue(key);
 	}
 	
 	public List<Object[]> getClassifierForCmd() {
