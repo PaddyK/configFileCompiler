@@ -9,31 +9,31 @@
 			<pathelement path="${antlrLib}" />
 			<pathelement path="${build.dir}" />
 					<pathelement path="${build.dir}" />
-					<pathelement path="${build.dir}/parser" />
-					<pathelement path="${build.dir}/interpretation" />
-					<pathelement path="${build.dir}/main" />
+					<pathelement path="${build.dir}/wekaConfigFileParser" />
+					<pathelement path="${build.dir}/wekaConfigFileInterpretation" />
+					<pathelement path="${build.dir}/wekaConfigFileMain" />
 		</path>
 		
 		<target name="compile_main" depends="compile_interpreter" description="Compile main package">
-			<mkdir dir="${build.dir}/main"/>
+			<mkdir dir="${build.dir}/wekaConfigFileMain"/>
 			<javac destdir="${build.dir}" source="${source.release}" target="${target.release}">
-				<src path="src/main" />
+				<src path="src/wekaConfigFileMain" />
 				<classpath refid="external_jars"/>
 			</javac>
 		</target>
 		
 		<target name="compile_structure" description="Compile interpretation package">
-			<mkdir dir="${build.dir}/interpretation"/>
+			<mkdir dir="${build.dir}/wekaConfigFileInterpretation"/>
 			<javac destdir="${build.dir}" source="${source.release}" target="${target.release}">
-				<src path="src/interpretation"/>
+				<src path="src/wekaConfigFileInterpretation"/>
 				<classpath refid="external_jars"/>
 			</javac>
 		</target>
 		
 		<target name="compile_interpreter" depends="build_interpreter,compile_structure" description="Compiling parser for configuration files">
-			<mkdir dir="${build.dir}/parser" />
+			<mkdir dir="${build.dir}/wekaConfigFileParser" />
 			<javac destdir="${build.dir}" source="${source.release}" target="${target.release}">
-				<src path="src/parser"/>
+				<src path="src/wekaConfigFileParser"/>
 				<classpath refid="external_jars" />
 			</javac>
 		</target>
@@ -41,10 +41,10 @@
 		<target name="build_interpreter" depends="compile_structure" description="Creates ANTL Parser and Lexer">
 			<java jar="${antlrLib}" fork="true">
 				<arg value="-o" />
-				<arg value="src/parser/" />
+				<arg value="src/wekaConfigFileParser/" />
 				<arg value="-listener" />
 				<arg value="-no-visitor" />
-				<arg value="src/parser/WekaConfigGrammar.g4" />
+				<arg value="src/wekaConfigFileParser/WekaConfigGrammar.g4" />
 			</java>
 		</target>
 		
