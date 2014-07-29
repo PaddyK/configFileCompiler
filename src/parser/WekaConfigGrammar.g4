@@ -5,20 +5,25 @@
  */
 
 grammar WekaConfigGrammar;
-@header{
+@header {
+    package parser;
+    import java.util.List;
+    import java.util.ArrayList;
+    import org.antlr.v4.runtime.Parser;
+    import interpretation.*;
+ }
 
-}
-configfile returns [Configfile f]
+configfile returns [ConfigFile f]
 @init {
-       $f = new Configfile(); }: 
+       $f = new ConfigFile(); }: 
               (e = element { $f.addElement($e.el); })+;
 
 element returns [Element el]
 @init {
        $el = new Element(); }: 
-           STARTTAG SPACE* name = string    { el.setName($name.mstring); }
-           (SPACE+ a = attributelist        { el.addAttributeList($a.attr); } )? 
-           SPACE* e = elementend            { el.setElementEnd($e.end); }
+           STARTTAG SPACE* name = string    { $el.setElementName($name.mstring); }
+           (SPACE+ a = attributelist        { $el.setAttributeList($a.attr); } )? 
+           SPACE* e = elementend            { $el.setElementEnd($e.end); }
            ;
 
 elementend returns [ElementEnd end] :
@@ -29,47 +34,60 @@ elementend returns [ElementEnd end] :
 attributelist returns [AttributeList attr]
 @init {
        $attr = new AttributeList();}: 
-              (k1 = keyvalue { $attr.addKeyValue($k1.kv); } )+
+              (k1 = keyvalue { $attr.addKeyValue($k1.kv); } SPACE* )+
               ;
 
 keyvalue returns [KeyValue kv]: 
             s = string EQ HK v = value HK {$kv = new KeyValue($s.mstring, $v.val); };
 
-longend returns [Longend le]: 
-           ENDTAG (e = element { $le.addElement($e.el)})+ 
-           STARTTAG SLASH s = string { $le.addEndName($s.mstring); } ENDTAG;
+longend returns [Longend le]
+@init {
+       $le = new Longend();}: 
+           ENDTAG (e = element { $le.addElement($e.el);})+ 
+           STARTTAG SLASH s = string { $le.setEndName($s.mstring); } ENDTAG;
 
 shortend returns [ShortEnd se]: 
             SLASH ENDTAG {$se = new ShortEnd(); };
 
 string returns [MyString mstring]
 @init {
-       $mstring = ""; }: 
-                  (s = SMALLCHAR    { $mstring += $s.text; }
-                  |c = CAPITALCHAR  { $mstring += $c.text; })
+       $mstring = new MyString(); }: 
+                  (s = SMALLCHAR    { $mstring.add($s.text); }
+                  |c = CAPITALCHAR  { $mstring.add($c.text); })
                   +;
 
 value returns [Value val]: 
                 (s = string     { $val = $s.mstring; }
                 | n = numeric   { $val = $n.num; }
                 | m = mixed     { $val = $m.mmixed; }
-				| p = path		{ $val = $p.p:}
+				| p = path		{ $val = $p.p;}
                 );
 
 numeric returns [MyNumeric num]
 @init {
-	$num = new MyNumeric(); }: 
-                  n = number { $num.setFirstNumber($n.num); }
-				  (s = sequence { $num.setSequence($s.seq);})?
+	MyNumber mn = null;
+        Sequence seq = null;}: 
+                  n = number { mn = $n.num; }
+		(s = sequence { seq = $s.seq;})?
                   ;
+        finally {
+                 if(seq == null)
+                    $num = mn;
+                 else {
+                       $num = seq;
+                       $num.setFirstNumber(mn);
+                 }
+ }
 
 sequence returns [Sequence seq]
 @init {
-       $seq = new Sequence(); }:
-                  COMMA n = number  { $seq = $seq.setSecondNumber( $n.num ); } 
-                  (e = explizit     { $seq = $seq.setRemainder( $e.exp ); } 
-                  | i = implizit)   { $seq = $seq.setRemainder( $i.imp ); } 
+       MyNumber nm = null;}:
+                  COMMA n = number  { nm = $n.num; } 
+                  (e = explizit     { $seq =  $e.exp; } 
+                  | i = implizit)   { $seq = $i.imp; } 
                   ;
+finally {
+         $seq.setNextNumber(nm); }
 
 explizit returns [Explizit exp]
 @init {
@@ -83,10 +101,10 @@ path returns [MyPath p]
 @init {
        $p = new MyPath(); }: 
                 (sl1 = SLASH{ $p.setIsRoot();  })? 
-                (s1 = mixed sl2 = SLASH)+  { $p.add($s1.text);  } 
-                s2 = mixed                 { $p.add($s2.text); }
+                (s1 = mixed sl2 = SLASH)+  { $p.add($s1.mmixed);  } 
+                s2 = mixed                 { $p.add($s2.mmixed); }
                 d = DOT                     
-                s3 = mixed                 { $p.addExtension($s3.text); }
+                s3 = mixed                 { $p.setExtension($s3.mmixed); }
                 ;
 
 mixed returns [Mixed mmixed]
@@ -106,16 +124,33 @@ mixed returns [Mixed mmixed]
 number returns [MyNumber num]:
            i = integer      { $num = $i.mint; }
             | f = floating  { $num = $f.mfloat; }
+            | p = power     { $num = $p.mPow; }
             ;
+power returns [MyPower mPow]
+@init {
+       $mPow = new MyPower(); }: 
+            (
+                  i = integer   {$mPow.setBase($i.mint);}
+                | f = floating  {$mPow.setBase($f.mfloat);}
+            ) 
+            HEAD 
+            (
+                  i = integer   {$mPow.setExponent($i.mint);}
+                | f = floating  {$mPow.setExponent($f.mfloat);}
+            )
+            ;
+
 integer returns [MyInteger mint]
 @init {
 	$mint = new MyInteger(); }:
-           s = MINUS { $mint.setSign(); } ? 
+           (s = MINUS { $mint.setSign(); }) ? 
 		   n = DIGIT { $mint.setNumber($n.text); }
             ;
 
-floating returns [MyFloat mfloat]: 
-           s = MINUS { $mfloat.setSign(); } ? 
+floating returns [MyFloat mfloat]
+@init {
+       $mfloat = new MyFloat(); }: 
+           (s = MINUS { $mfloat.setSign(); }) ? 
 		   n = DIGIT DOT m = DIGIT 
            { $mfloat.setNumber($n.text, $m.text); }
             ;
@@ -134,3 +169,4 @@ CAPITALCHAR :   ('A'..'Z');
 WS          :   ('\t' | '\n' | '\r' | '\r\n')     { skip();};
 SPACE       :   ' ';
 BSLASH      :   '\\';
+HEAD        :   '^';

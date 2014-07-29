@@ -64,6 +64,12 @@ public class MyInteger extends MyNumber {
 	public List<Value> getValueSpace() {
 		List<Value> list = new ArrayList<Value>();
 		list.add(this);
-		return null;
+		return list;
+	}
+	
+	@Override
+	public Object getValue() {
+		Integer i = new Integer(myInt);
+		return i;
 	}
 }

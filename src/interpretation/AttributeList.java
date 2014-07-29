@@ -3,7 +3,7 @@ package interpretation;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AttributeList {
+public class AttributeList {
 	private List<interpretation.KeyValue> pairs;
 	
 	public AttributeList(){
@@ -41,5 +41,20 @@ public abstract class AttributeList {
 			}
 			return thisList;		
 		}
+	}
+	
+	public List<KeyValue> getPairs() {
+		return pairs;
+	}
+	
+	public int size() {
+		return pairs.size();
+	}
+	
+	public KeyValue getKeyValue(String key) {
+		for(KeyValue kv : pairs)
+			if(((String)kv.getKey().getValue()).equalsIgnoreCase(key))
+				return kv;
+		return null;
 	}
 }

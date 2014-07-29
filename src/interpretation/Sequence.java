@@ -4,17 +4,17 @@ import java.util.List;
 
 public abstract class Sequence extends MyNumeric {
 	protected MyNumber nextNumber;
-	private Sequence remainder;
+	//private Sequence remainder;
 	
 	public Sequence() {
 		
 	}
-		
+	
 	public void setNextNumber(MyNumber number) {
 		nextNumber = number;
 	}
 	
-	public void setRemainder(Sequence rem) {
+	/*public void setRemainder(Sequence rem) {
 		remainder = rem;
 	}
 	
@@ -23,5 +23,5 @@ public abstract class Sequence extends MyNumeric {
 		remainder.setFirstNumber(firstNumber);
 		remainder.setNextNumber(nextNumber);
 		return remainder.getKeyValuePairs(key);
-	}
+	}*/
 }

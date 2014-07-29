@@ -38,7 +38,7 @@ public class MyPath extends Value {
 			if(isRoot) path = "/";
 		}
 		for(Mixed mix : pathelements)
-			path = mix.toString() + separator;
+			path += mix.toString() + separator;
 		path = path.substring(0, path.length() - 1);
 		if(extension != null)
 			path += "." + extension.toString();
@@ -56,6 +56,10 @@ public class MyPath extends Value {
 	public List<Value> getValueSpace() {
 		List<Value> list = new ArrayList<Value>();
 		list.add(this);
-		return null;
+		return list;
+	}
+	
+	@Override public Object getValue() {
+		return toString();
 	}
 }

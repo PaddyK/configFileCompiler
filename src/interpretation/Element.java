@@ -11,6 +11,10 @@ public class Element {
 		this.end = end;
 	}
 	
+	public ElementEnd getEnd() {
+		return end;
+	}
+	
 	public void setElementName(MyString name) {
 		this.name = name;
 	}
@@ -29,5 +33,13 @@ public class Element {
 				if(!e.isSyntaxCorrect(level++))
 					error = false;
 		return error;
+	}
+	
+	public MyString getName() {
+		return name;
+	}
+	
+	public AttributeList getAttributeList() {
+		return list;
 	}
 }

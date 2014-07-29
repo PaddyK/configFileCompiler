@@ -32,6 +32,11 @@ public class Mixed extends Value {
 	public List<Value> getValueSpace() {
 		List<Value> list = new ArrayList<Value>();
 		list.add(this);
-		return null;
+		return list;
+	}
+	
+	@Override
+	public Object getValue() {
+		return value;
 	}
 }

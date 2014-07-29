@@ -57,7 +57,7 @@ public class MyFloat extends MyNumber {
 	public List<Value> getValueSpace() {
 		List<Value> list = new ArrayList<Value>();
 		list.add(this);
-		return null;
+		return list;
 	}	
 
 	@Override
@@ -65,5 +65,11 @@ public class MyFloat extends MyNumber {
 		List<interpretation.KeyValue> list = new ArrayList<interpretation.KeyValue>();
 		list.add(new interpretation.KeyValue(key, this));
 		return list;
+	}
+	
+	@Override
+	public Object getValue() {
+		Double d = new Double(myFloat);
+		return d;
 	}
 }

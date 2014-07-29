@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+ 
 
 grammar WekaConfigParser;
 configfile      : element+;
 element         : STARTTAG SPACE* string (SPACE+ attributelist)? SPACE* elementend;
 elementend      : (shortend | longend);
-attributelist      : (keyvalue SPACE*)+;
+attributelist   : (keyvalue SPACE*)+;
 keyvalue        : string EQ HK value HK;
 longend         : ENDTAG element+ STARTTAG SLASH string ENDTAG;
 shortend        : SLASH ENDTAG;
@@ -41,7 +42,9 @@ mixed           : (DOT
                 )+;
 number :
            integer 
-            | floating;
+            | floating
+            | power;
+power : (integer | floating) HEAD (integer | floating);
 integer :
            MINUS? DIGIT;
 
@@ -62,3 +65,4 @@ CAPITALCHAR :   ('A'..'Z');
 WS          :   ('\t' | '\n' | '\r' | '\r\n')     { skip();};
 SPACE       :   ' ';
 BSLASH      :   '\\';
+HEAD        :   '^';
