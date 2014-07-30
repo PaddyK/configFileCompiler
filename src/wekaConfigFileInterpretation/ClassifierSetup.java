@@ -148,7 +148,7 @@ public class ClassifierSetup {
 		
 		for(List<String> l : listOfLists)
 			if((add = implode(l)) == null)
-				ret.add("");
+				return null;
 			else
 				ret.add(add);
 		return ret;

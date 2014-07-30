@@ -24,8 +24,8 @@ public class RunInterpreter {
 			for(ExperimentSetup s : setups) {
 				System.out.println(s.resourcesToString());
 				s.printClassifier();
-				List<String[]> options = s.getClassifierSetups().get(0).getOptionsAsArray();
-				System.out.println(s.resourcesToString());
+				if(s.getClassifierSetups().get(0).hasOptions())
+					System.out.println("Classifier has options");
 			}
 
 		} catch(Exception e) {

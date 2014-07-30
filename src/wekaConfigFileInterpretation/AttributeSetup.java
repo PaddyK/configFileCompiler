@@ -47,11 +47,21 @@ public class AttributeSetup {
 			case "B":
 				if(sw == null) sw = "-B";
 				setup = new ClassifierSetup(attribute.getEnd().getElements().get(0));
-				for(String s : setup.toStringList()) {
+				List<String> optionString;
+				// If option list is present a space must be added after classifier name
+				if((optionString = setup.toStringList()) == null) {
 					list = new ArrayList<String>();
 					list.add(sw);
-					list.add("\"" + setup.getClassifierName() + s + "\"");
+					list.add("\"" + setup.getClassifierName() + "\"");
 					listOfLists.add(list);
+				}
+				else {					
+					for(String s : optionString) {
+						list = new ArrayList<String>();
+						list.add(sw);
+						list.add("\"" + setup.getClassifierName() + " " + s + "\"");
+						listOfLists.add(list);
+					}
 				}
 				break;
 			}
