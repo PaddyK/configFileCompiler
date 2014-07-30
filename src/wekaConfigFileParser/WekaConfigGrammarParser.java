@@ -801,7 +801,7 @@ public class WekaConfigGrammarParser extends Parser {
 			setState(147); match(COMMA);
 			setState(148); ((SequenceContext)_localctx).n = number();
 			 nm = ((SequenceContext)_localctx).n.num; 
-			setState(154);
+			setState(156);
 			switch (_input.LA(1)) {
 			case COMMA:
 			case HK:
@@ -813,12 +813,12 @@ public class WekaConfigGrammarParser extends Parser {
 			case DOT:
 				{
 				setState(153); ((SequenceContext)_localctx).i = implizit();
+				 ((SequenceContext)_localctx).seq =  ((SequenceContext)_localctx).i.imp; 
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
-			 ((SequenceContext)_localctx).seq =  ((SequenceContext)_localctx).i.imp; 
 			}
 		}
 		catch (RecognitionException re) {
@@ -1481,8 +1481,8 @@ public class WekaConfigGrammarParser extends Parser {
 		"\6\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\6\7k\n\7\r\7\16\7l\3\7\3\7\3\7\3\7"+
 		"\3\7\3\7\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\6\t}\n\t\r\t\16\t~\3\n\3\n\3"+
 		"\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\5\n\u008d\n\n\3\13\3\13\3\13\3"+
-		"\13\3\13\5\13\u0094\n\13\3\f\3\f\3\f\3\f\3\f\3\f\3\f\5\f\u009d\n\f\3\f"+
-		"\3\f\3\r\3\r\3\r\3\r\7\r\u00a5\n\r\f\r\16\r\u00a8\13\r\3\16\3\16\3\16"+
+		"\13\3\13\5\13\u0094\n\13\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\5\f\u009f"+
+		"\n\f\3\r\3\r\3\r\3\r\7\r\u00a5\n\r\f\r\16\r\u00a8\13\r\3\16\3\16\3\16"+
 		"\3\16\3\16\3\17\3\17\5\17\u00b1\n\17\3\17\3\17\3\17\6\17\u00b6\n\17\r"+
 		"\17\16\17\u00b7\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\20\3\20\3\20\3\20"+
 		"\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20"+
@@ -1518,9 +1518,9 @@ public class WekaConfigGrammarParser extends Parser {
 		"\2\u008e\u008f\5 \21\2\u008f\u0093\b\13\1\2\u0090\u0091\5\26\f\2\u0091"+
 		"\u0092\b\13\1\2\u0092\u0094\3\2\2\2\u0093\u0090\3\2\2\2\u0093\u0094\3"+
 		"\2\2\2\u0094\25\3\2\2\2\u0095\u0096\7\6\2\2\u0096\u0097\5 \21\2\u0097"+
-		"\u009c\b\f\1\2\u0098\u0099\5\30\r\2\u0099\u009a\b\f\1\2\u009a\u009d\3"+
-		"\2\2\2\u009b\u009d\5\32\16\2\u009c\u0098\3\2\2\2\u009c\u009b\3\2\2\2\u009d"+
-		"\u009e\3\2\2\2\u009e\u009f\b\f\1\2\u009f\27\3\2\2\2\u00a0\u00a1\7\6\2"+
+		"\u009e\b\f\1\2\u0098\u0099\5\30\r\2\u0099\u009a\b\f\1\2\u009a\u009f\3"+
+		"\2\2\2\u009b\u009c\5\32\16\2\u009c\u009d\b\f\1\2\u009d\u009f\3\2\2\2\u009e"+
+		"\u0098\3\2\2\2\u009e\u009b\3\2\2\2\u009f\27\3\2\2\2\u00a0\u00a1\7\6\2"+
 		"\2\u00a1\u00a2\5 \21\2\u00a2\u00a3\b\r\1\2\u00a3\u00a5\3\2\2\2\u00a4\u00a0"+
 		"\3\2\2\2\u00a5\u00a8\3\2\2\2\u00a6\u00a4\3\2\2\2\u00a6\u00a7\3\2\2\2\u00a7"+
 		"\31\3\2\2\2\u00a8\u00a6\3\2\2\2\u00a9\u00aa\7\t\2\2\u00aa\u00ab\7\t\2"+
@@ -1554,7 +1554,7 @@ public class WekaConfigGrammarParser extends Parser {
 		"\1\2\u00fa%\3\2\2\2\u00fb\u00fc\7\b\2\2\u00fc\u00fe\b\24\1\2\u00fd\u00fb"+
 		"\3\2\2\2\u00fd\u00fe\3\2\2\2\u00fe\u00ff\3\2\2\2\u00ff\u0100\7\7\2\2\u0100"+
 		"\u0101\7\t\2\2\u0101\u0102\7\7\2\2\u0102\u0103\b\24\1\2\u0103\'\3\2\2"+
-		"\2\32-\63;@EQX]l|~\u008c\u0093\u009c\u00a6\u00b0\u00b7\u00d4\u00d6\u00e1"+
+		"\2\32-\63;@EQX]l|~\u008c\u0093\u009e\u00a6\u00b0\u00b7\u00d4\u00d6\u00e1"+
 		"\u00e9\u00f2\u00f6\u00fd";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());

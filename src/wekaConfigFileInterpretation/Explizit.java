@@ -20,8 +20,8 @@ public class Explizit extends Sequence {
 		values.add(nextNumber);
 		Collections.sort(values);
 		List<Value> list = new ArrayList<Value>();
-		for(int i=0; i<list.size(); i++)
-			list.add(values.get(i));
+		for(Value v : values)
+			list.add(v);
 		return list;
 	}
 	

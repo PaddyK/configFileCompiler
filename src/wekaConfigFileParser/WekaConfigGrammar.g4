@@ -83,8 +83,10 @@ sequence returns [Sequence seq]
 @init {
        MyNumber nm = null;}:
                   COMMA n = number  { nm = $n.num; } 
-                  (e = explizit     { $seq =  $e.exp; } 
-                  | i = implizit)   { $seq = $i.imp; } 
+                  (
+                      e = explizit     { $seq =  $e.exp; } 
+                    | i = implizit { $seq = $i.imp; }
+                  )    
                   ;
 finally {
          $seq.setNextNumber(nm); }

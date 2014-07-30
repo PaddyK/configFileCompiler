@@ -51,8 +51,9 @@ public class Resource {
 	@Override
 	public String toString() {
 		String ret = "";
-		for(String s : resourcen.keySet())
+		for(String s : resourcen.keySet()) {
 			ret += s + "=\"" + resourcen.get(s) + "\", ";
+		}
 		if(ret.length()>2)ret = ret.substring(0,ret.length() - 2);
 		return ret;
 	}
