@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 	<project name="ConfigFileCompiler" default="package" basedir=".">
+		<property name="configfile" value="Set path to weka config file in ANT file" />
 		<property environment="env"/>
 		<property name="build.dir" value="build"/>
 		<property name="target.release" value="1.7"/>
@@ -53,15 +54,15 @@
 				basedir="${build.dir}">
 				<fileset dir="${build.dir}" />
 				<manifest>
-					<attribute name="Main-Class" value="main.RunInterpreter"/>
+					<attribute name="Main-Class" value="wekaConfigFileMain.RunInterpreter"/>
 					<attribute name="Class-Path" value="${antlrLib}" />
 				</manifest>
 			</jar>
 		</target>
 		
-		<target name="run" depends="package" description="Run program">
+		<target name="run" description="Run program">
 			<java jar="${basedir}/ConfigFileCompiler.jar" fork="true">
-				<arg value="C:/Users/kalmbach/Documents/GitHub/StudyWorks/example1.xml" />
+				<arg value="${configfile}" />
 				<classpath>
 					<pathelement location="${basedir}/lib/antlr-4.2.2-complete.jar"/>
 				</classpath>
