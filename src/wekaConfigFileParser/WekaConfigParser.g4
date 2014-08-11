@@ -29,7 +29,7 @@ nosequence      : (number
                 | path 
                 | string 
                 | mixed);
-path            : SLASH? (string SLASH)+ string DOT string;
+path            : SLASH? (mixed SLASH)+ (mixed DOT mixed)?;
 mixed           : (DOT 
                 | COMMA 
                 | SPACE 
@@ -39,6 +39,7 @@ mixed           : (DOT
                 | BSLASH HK 
                 | SMALLCHAR 
                 | CAPITALCHAR
+                | USCORE
                 )+;
 number :
            integer 
@@ -57,6 +58,7 @@ SLASH       :   '/';
 COMMA       :   ',';
 DIGIT       :   ('0'..'9')+;
 MINUS       :   '-';
+USCORE      :   '\u005F';
 DOT         :   '.';
 EQ          :   '=';
 HK          :   '"';

@@ -30,12 +30,18 @@ public class MyPath extends Value {
 		String path = "";
 		String separator;
 		if(System.getProperty("os.name").contains("Windows")) {
-			if(isRoot) path += "C:\\";
 			separator = "\\";
+			if(isRoot) {
+				path += pathelements.get(0).toString().toUpperCase() + ":" + separator;
+				pathelements.remove(0);
+			}
 		}
 		else {
 			separator = "/";
-			if(isRoot) path = "/";
+			if(isRoot) {
+				path = pathelements.get(0).toString().toLowerCase() + separator;				
+				pathelements.remove(0);
+			}
 		}
 		for(Mixed mix : pathelements)
 			path += mix.toString() + separator;

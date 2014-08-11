@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 	<project name="ConfigFileCompiler" default="package" basedir=".">
-		<property name="configfile" value="Set path to weka config file in ANT file" />
+		<property name="configfile" value="../StudyWorks/configfiles/example5.xml" />
 		<property environment="env"/>
 		<property name="build.dir" value="build"/>
 		<property name="target.release" value="1.7"/>
 		<property name="source.release" value="1.7" />
-		<property name="antlrLib" value="../../tools/antlr-4.2.2-complete.jar" />
+		<property name="antlrLib" value="../../../my_libraries/antlr-4.2.2-complete.jar" />
 		<path id="external_jars">
 			<pathelement path="${antlrLib}" />
 			<pathelement path="${build.dir}" />

@@ -103,10 +103,12 @@ path returns [MyPath p]
 @init {
        $p = new MyPath(); }: 
                 (sl1 = SLASH{ $p.setIsRoot();  })? 
-                (s1 = mixed sl2 = SLASH)+  { $p.add($s1.mmixed);  } 
-                s2 = mixed                 { $p.add($s2.mmixed); }
-                d = DOT                     
-                s3 = mixed                 { $p.setExtension($s3.mmixed); }
+                (s1 = mixed sl2 = SLASH    { $p.add($s1.mmixed);  })+   
+                (
+                    s2 = mixed             { $p.add($s2.mmixed); }
+                    d = DOT                     
+                    s3 = mixed             { $p.setExtension($s3.mmixed); }
+                )?
                 ;
 
 mixed returns [Mixed mmixed]
@@ -121,6 +123,7 @@ mixed returns [Mixed mmixed]
                 | bhk = BSLASH HK       { $mmixed.add($bhk.text); }
                 | sc = SMALLCHAR        { $mmixed.add($sc.text); }
                 | cc = CAPITALCHAR      { $mmixed.add($cc.text); }
+                | us = USCORE           { $mmixed.add($us.text); }
                 )+;
 
 number returns [MyNumber num]:
@@ -163,6 +166,7 @@ SLASH       :   '/';
 COMMA       :   ',';
 DIGIT       :   ('0'..'9')+;
 MINUS       :   '-';
+USCORE      :   '\u005F';
 DOT         :   '.';
 EQ          :   '=';
 HK          :   '"';
