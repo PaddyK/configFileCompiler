@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 	<project name="ConfigFileCompiler" default="package" basedir=".">
-		<property name="configfile" value="../StudyWorks/configfiles/example5.xml" />
+		<property name="configfile" value="Path to config file" />
 		<property environment="env"/>
 		<property name="build.dir" value="build"/>
 		<property name="target.release" value="1.7"/>

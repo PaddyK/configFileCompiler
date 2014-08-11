@@ -20,13 +20,16 @@ public class MyInteger extends MyNumber {
 	}
 	
 	public int getIntegerValue() {
+		if(sign) {
+			return myInt *(-1);			
+		}
 		return myInt;
 	}
 	
 	@Override
 	public String toString() {
 		if(sign) {
-			myInt *= -1;			
+			return "" + (myInt*(-1));			
 		}
 		return "" + myInt;
 	}
@@ -69,7 +72,11 @@ public class MyInteger extends MyNumber {
 	
 	@Override
 	public Object getValue() {
-		Integer i = new Integer(myInt);
+		Integer i;
+		if(sign)
+			i = new Integer(myInt*(-1));
+		else
+			i = new Integer(myInt);
 		return i;
 	}
 }

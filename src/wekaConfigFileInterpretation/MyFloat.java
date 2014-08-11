@@ -20,13 +20,16 @@ public class MyFloat extends MyNumber {
 	}
 	
 	public double getDoubleValue() {
+		if(sign) {
+			return myFloat *(-1);			
+		}
 		return myFloat;
 	}
 	
 	@Override
 	public String toString() {
 		if(sign) {
-			myFloat *= -1;			
+			return "" + (myFloat*(-1));			
 		}
 		return "" + myFloat;
 	}
@@ -69,7 +72,11 @@ public class MyFloat extends MyNumber {
 	
 	@Override
 	public Object getValue() {
-		Double d = new Double(myFloat);
+		Double d;
+		if(sign)
+			d = new Double(myFloat*(-1));
+		else
+			d = new Double(myFloat);
 		return d;
 	}
 }

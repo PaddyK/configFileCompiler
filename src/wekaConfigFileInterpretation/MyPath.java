@@ -28,16 +28,14 @@ public class MyPath extends Value {
 	@Override
 	public String toString() {
 		String path = "";
-		String separator;
+		String separator = System.getProperty("file.separator");
 		if(System.getProperty("os.name").contains("Windows")) {
-			separator = "\\";
 			if(isRoot) {
 				path += pathelements.get(0).toString().toUpperCase() + ":" + separator;
 				pathelements.remove(0);
 			}
 		}
 		else {
-			separator = "/";
 			if(isRoot) {
 				path = pathelements.get(0).toString().toLowerCase() + separator;				
 				pathelements.remove(0);
