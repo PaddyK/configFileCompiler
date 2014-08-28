@@ -37,7 +37,7 @@ public class MyPath extends Value {
 		}
 		else {
 			if(isRoot) {
-				path = pathelements.get(0).toString().toLowerCase() + separator;				
+				path = separator +  pathelements.get(0).toString().toLowerCase() + separator;				
 				pathelements.remove(0);
 			}
 		}
